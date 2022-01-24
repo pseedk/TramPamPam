@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "331446972179",
+    "project_id": "trampampam",
+    "storage_bucket": "trampampam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331446972179:android:6cb4859e800e7fe17574e6",
+        "android_client_info": {
+          "package_name": "com.pseedk.trampampam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331446972179-ntcsq2p9jlr650ncu71a2dou51l784os.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_PZjrEPcbtFT4YOvc36nGExEg44vV344"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331446972179-ntcsq2p9jlr650ncu71a2dou51l784os.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
