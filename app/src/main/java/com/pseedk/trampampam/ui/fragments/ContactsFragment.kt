@@ -10,6 +10,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.pseedk.trampampam.R
 import com.pseedk.trampampam.models.CommonModel
+import com.pseedk.trampampam.ui.fragments.single_chat.SingleChatFragment
 import com.pseedk.trampampam.utilits.*
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.contact_item.view.*
@@ -33,16 +34,22 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
     private fun initRecycleView() {
         mRecyclerView = contacts_recycle_view
         mRefContacts = REF_DATABASE_ROOT.child(NODE_PHONES_CONTACTS).child(CURRENT_UID)
+
+        //Настройка для адаптера, где указываем, какие данные и откуда получать
         val options = FirebaseRecyclerOptions.Builder<CommonModel>()
             .setQuery(mRefContacts, CommonModel::class.java)
             .build()
+
+            //Адаптер принимает данные, отображает в холдере
         mAdapter = object : FirebaseRecyclerAdapter<CommonModel, ContactsHolder>(options) {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsHolder {
+                //Запускается тогда, когда адаптер получает доступ к ViewGroup
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.contact_item, parent, false)
                 return ContactsHolder(view)
             }
 
+            //Заполняет holder
             override fun onBindViewHolder(
                 holder: ContactsHolder,
                 position: Int,
@@ -51,10 +58,13 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
                 mRefUsers = REF_DATABASE_ROOT.child(NODE_USERS).child(model.id)
                 mRefUsersListener = AppValueEventListener {
                     val contact = it.getCommonModel()
-                    holder.name.text = contact.fullname
+                    if (contact.fullname.isEmpty()) {
+                        holder.name.text = model.fullname
+                    } else holder.name.text = contact.fullname
+
                     holder.status.text = contact.state
                     holder.photo.downloadAndSetImage(contact.photoUrl)
-                    holder.itemView.setOnClickListener { replaceFragment(SingleChatFragment(contact)) }
+                    holder.itemView.setOnClickListener { replaceFragment(SingleChatFragment(model)) }
                 }
                 mRefUsers.addValueEventListener(mRefUsersListener)
                 mapListeners[mRefUsers] = mRefUsersListener

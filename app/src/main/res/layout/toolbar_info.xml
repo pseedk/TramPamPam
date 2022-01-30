@@ -7,10 +7,9 @@
     android:background="@color/colorPrimary">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/toolbar_image"
+        android:id="@+id/toolbar_chat_image"
         android:layout_width="@dimen/toolbar_image_width"
         android:layout_height="@dimen/toolbar_image_height"
-        android:layout_marginStart="@dimen/app_small_margin"
         android:src="@drawable/default_photo"
         app:civ_circle_background_color="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,19 +18,19 @@
 
 
     <TextView
-        android:id="@+id/contact_fullname"
+        android:id="@+id/toolbar_chat_fullname"
         style="@style/normal_text"
         android:textColor="@color/colorAccent"
-        app:layout_constraintStart_toEndOf="@id/toolbar_image"
-        app:layout_constraintTop_toTopOf="@id/toolbar_image"
+        app:layout_constraintStart_toEndOf="@id/toolbar_chat_image"
+        app:layout_constraintTop_toTopOf="@id/toolbar_chat_image"
         tools:text="Youra Petrov" />
 
     <TextView
-        android:id="@+id/contact_status"
+        android:id="@+id/toolbar_chat_status"
         style="@style/small_text"
         android:textColor="@color/colorAccentDark"
-        app:layout_constraintStart_toEndOf="@id/toolbar_image"
-        app:layout_constraintTop_toBottomOf="@id/contact_fullname"
+        app:layout_constraintStart_toEndOf="@id/toolbar_chat_image"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_chat_fullname"
         tools:text="в сети" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
