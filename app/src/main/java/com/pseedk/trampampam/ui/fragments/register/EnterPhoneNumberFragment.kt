@@ -1,4 +1,4 @@
-package com.pseedk.trampampam.ui.fragments
+package com.pseedk.trampampam.ui.fragments.register
 
 import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseException
@@ -8,11 +8,7 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.pseedk.trampampam.MainActivity
 import com.pseedk.trampampam.R
-import com.pseedk.trampampam.activities.RegisterActivity
-import com.pseedk.trampampam.utilits.AUTH
-import com.pseedk.trampampam.utilits.replaceActivity
-import com.pseedk.trampampam.utilits.replaceFragment
-import com.pseedk.trampampam.utilits.showToast
+import com.pseedk.trampampam.utilits.*
 import kotlinx.android.synthetic.main.fragment_enter_phone_number.*
 import java.util.concurrent.TimeUnit
 
@@ -29,7 +25,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
                 AUTH.signInWithCredential(credential).addOnCompleteListener {
                     if (it.isSuccessful) {
                         showToast("Добро пожаловать")
-                        (activity as RegisterActivity).replaceActivity(MainActivity())
+                        restartActivity()
                     } else showToast(it.exception?.message.toString())
                 }
             }
@@ -60,7 +56,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
         PhoneAuthProvider.verifyPhoneNumber(
             PhoneAuthOptions
                 .newBuilder(FirebaseAuth.getInstance())
-                .setActivity(activity as RegisterActivity)
+                .setActivity(APP_ACTIVITY)
                 .setPhoneNumber(mPhoneNumber)
                 .setTimeout(60L, TimeUnit.SECONDS)
                 .setCallbacks(mCallback)

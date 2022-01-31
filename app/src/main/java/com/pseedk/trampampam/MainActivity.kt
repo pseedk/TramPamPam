@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.pseedk.trampampam.activities.RegisterActivity
 import com.pseedk.trampampam.databinding.ActivityMainBinding
-import com.pseedk.trampampam.ui.fragments.ChatFragment
+import com.pseedk.trampampam.ui.fragments.MainFragment
+import com.pseedk.trampampam.ui.fragments.register.EnterPhoneNumberFragment
 import com.pseedk.trampampam.ui.objects.AppDrawer
 import com.pseedk.trampampam.utilits.*
 import kotlinx.coroutines.CoroutineScope
@@ -35,16 +35,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Функция инициализирует функциональность приложения
     private fun initFunc() {
+        setSupportActionBar(mToolbar)
         if (AUTH.currentUser != null) {
-            setSupportActionBar(mToolbar)
+
             mAppDrawer.create()
-            replaceFragment(ChatFragment(), false)
+            replaceFragment(MainFragment(), false)
         } else {
-            replaceActivity(RegisterActivity())
+            replaceFragment(EnterPhoneNumberFragment(), false)
         }
     }
 
+    //Функция инициализирует переменные
     private fun initFields() {
         mToolbar = mBinding.mainToolbar
         mAppDrawer = AppDrawer()

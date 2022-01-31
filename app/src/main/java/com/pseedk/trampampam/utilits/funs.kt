@@ -9,43 +9,42 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.pseedk.trampampam.MainActivity
 import com.pseedk.trampampam.R
 import com.pseedk.trampampam.models.CommonModel
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
 
+//Файл для хранения утилитарных функций, доступных во всем приложении
+
+//Функция показывает сообщение
 fun showToast(message: String) {
     Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_SHORT).show()
 }
 
-fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
-    val intent = Intent(this, activity::class.java)
-    startActivity(intent)
-    this.finish()
+//Функция расширения для AppCompatActivity, позволяет запускать активити
+fun restartActivity() {
+    val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
+    APP_ACTIVITY.startActivity(intent)
+    APP_ACTIVITY.finish()
 }
 
-fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = true) {
+//Функция расширения для AppCompatActivity, позволяет устанавливать фрагменты
+fun replaceFragment(fragment: Fragment, addStack: Boolean = true) {
     if (addStack) {
-        supportFragmentManager.beginTransaction()
+        APP_ACTIVITY.supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .replace(R.id.data_container, fragment)
             .commit()
     } else {
-        supportFragmentManager.beginTransaction()
+        APP_ACTIVITY.supportFragmentManager.beginTransaction()
             .replace(R.id.data_container, fragment)
             .commit()
     }
-
 }
 
-fun Fragment.replaceFragment(fragment: Fragment) {
-    this.parentFragmentManager.beginTransaction()
-        .addToBackStack(null)
-        .replace(R.id.data_container, fragment)
-        .commit()
-}
-
+//Функция скрывает клавиатуру
 fun hideKeyboard() {
     val imm: InputMethodManager =
         APP_ACTIVITY.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
