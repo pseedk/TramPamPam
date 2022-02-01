@@ -10,15 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pseedk.trampampam.R
 import com.pseedk.trampampam.models.CommonModel
 import com.pseedk.trampampam.utilits.CURRENT_UID
-import com.pseedk.trampampam.utilits.DiffUtilCallback
 import com.pseedk.trampampam.utilits.asTime
 import kotlinx.android.synthetic.main.message_item.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
-    private var mListMessagesCache = emptyList<CommonModel>()
+    private var mListMessagesCache = mutableListOf<CommonModel>()
     private lateinit var mDiffResult: DiffUtil.DiffResult
 
     class SingleChatHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -54,15 +51,21 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
 
     override fun getItemCount(): Int = mListMessagesCache.size
 
+    fun addItemToBottom(item: CommonModel, onSuccess: () -> Unit){
+        if (!mListMessagesCache.contains(item)) {
+            mListMessagesCache.add(item)
+            notifyItemInserted(mListMessagesCache.size)
+        }
+        onSuccess
+    }
 
-    fun addItem(item: CommonModel) {
-        val newList = mutableListOf<CommonModel>()
-        newList.addAll(mListMessagesCache)
-        if (!newList.contains(item)) newList.add(item)
-        newList.sortBy { it.timeStamp.toString() }
-        mDiffResult = DiffUtil.calculateDiff(DiffUtilCallback(mListMessagesCache, newList))
-        mDiffResult.dispatchUpdatesTo(this)
-        mListMessagesCache = newList
+    fun addItemToTop(item: CommonModel, onSuccess: () -> Unit){
+        if (!mListMessagesCache.contains(item)) {
+            mListMessagesCache.add(item)
+            mListMessagesCache.sortBy { it.timeStamp.toString() }
+            notifyItemInserted(0)
+        }
+        onSuccess
     }
 }
 
